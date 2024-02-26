@@ -168,5 +168,3 @@ EMAIL_HOST_USER = 'markshperkin1@gmail.com'  # your email address
 EMAIL_HOST_PASSWORD = 'vbnenkmbbkmknspf'  # your email password
 # the email password is C@pStone
 
-import django_on_heroku
-django_on_heroku.settings(locals())
