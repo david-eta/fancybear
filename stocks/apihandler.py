@@ -28,13 +28,13 @@ def format_dic(dic: dict) -> dict:
 
 key = 'FW2H8DGS1C7FY99C'
 
-def stock_details(ticker = 'AAPL'):
+def stock_details(ticker):
   url = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol='+ticker+'&apikey='+key
   r = requests.get(url)
   info = r.json()['Global Quote']
   return format_dic(info)
 
-def search_results(search_input = 'BA'):
+def search_results(search_input):
   url = 'https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords='+search_input+'&apikey='+key
   r = requests.get(url)
   res = []
@@ -42,5 +42,3 @@ def search_results(search_input = 'BA'):
   for match in matches:
     res.append((match['1. symbol'], match['2. name']))
   return res
-
-print(stock_details())
