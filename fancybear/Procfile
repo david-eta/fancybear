@@ -1,1 +1,1 @@
-web: gunicorn fancybear.wsgi:application --log-file -
+web: gunicorn fancy-bear.wsgi:application --log-file -
