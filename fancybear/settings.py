@@ -29,6 +29,7 @@ ENV_ALLOWED_HOST = os.environ.get('DJANGO_ALLOWED_HOST') or None
 ALLOWED_HOSTS = []
 if not DEBUG:
     ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
+ALLOWED_HOSTS = ['fancy-bear-64fe20927fa1.herokuapp.com', 'localhost', '127.0.0.1']
 
 # Application definition
 
