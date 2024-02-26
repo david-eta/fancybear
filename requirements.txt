@@ -1,9 +1,12 @@
 asgiref==3.7.2
+certifi==2022.9.24
+charset-normalizer==2.1.1
 dj-database-url==2.1.0
 Django==4.2.6
 django-heroku==0.3.1
 django-on-heroku==1.1.2
 gunicorn==21.2.0
+idna==3.4
 psycopg2==2.9.9
 sqlparse==0.4.4
 tzdata==2023.3
