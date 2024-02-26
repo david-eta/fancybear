@@ -1,0 +1,26 @@
+<!-- templates/add_trade.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Add a Trade to Your Portfolio</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {{ form.ticker.label_tag }} {{ form.ticker }}
+        <br>
+        {{ form.quantity.label_tag }} {{ form.quantity }}
+        <br>
+        {{ form.action.label_tag }}
+        <div class="radio-group">
+            {% for choice in form.action.field.choices %}
+                <label>
+                    <input type="radio" name="action" value="{{ choice.0 }}" {% if choice.0 == form.action.value %} checked {% endif %}>
+                    {{ choice.1 }}
+                </label>
+                <br>
+            {% endfor %}
+        </div>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+{% endblock %}

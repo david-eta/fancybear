@@ -1,0 +1,82 @@
+<!-- templates/stocks/search_results.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+  <h2>Search Results for "{{ search_query }}"</h2>
+  {% if results %}
+    <!-- RESULTS TABLE -->
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <tbody>
+          {% for ticker, name in results %}
+            <tr>
+              <a href="{% url 'stock_details' ticker %}">
+                <td style="width: 50px;" class="image" onclick="window.location='{% url 'stock_details' ticker %}';">
+                  <img src="abc.jpg" alt="IMG">
+                </td>
+              </a>
+              <a href="{% url 'stock_details' ticker %}">
+                <td class="product" onclick="window.location='{% url 'stock_details' ticker %}';">
+                  <strong>{{ name }}</strong><br>{{ ticker }}
+                </td>
+              </a>
+              <!-- Add the Favorites button here -->
+              <td>
+                {% if user.is_authenticated %}
+                  {% if ticker in favorites %}
+                    <img src="{% static 'images/faves/red_heart.png' %}" class="favorite-btn" data-ticker="{{ ticker }}" data-favorited="true" alt="Unfavorite">
+                  {% else %}
+                    <img src="{% static 'images/faves/heart.png' %}" class="favorite-btn" data-ticker="{{ ticker }}" data-favorited="false" alt="Favorite">  
+                  {% endif %}
+                {% endif %}
+       
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="3" class="text-center">No results found.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <!-- END RESULTS TABLE -->
+  {% else %}
+    <p>No results found.</p>
+  {% endif %}
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll('.favorite-btn').forEach(img => {
+        img.addEventListener('click', function(event) {
+          event.stopPropagation(); // Prevent the click from affecting parent elements
+    
+          const ticker = this.getAttribute('data-ticker');
+          const favorited = this.getAttribute('data-favorited') === 'true';
+          const url = `{% url 'toggle_favorite' %}`;
+          const data = {'ticker': ticker, 'favorited': !favorited};
+          fetch(url, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              'X-CSRFToken': '{{ csrf_token }}',
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              this.src = favorited ? "{% static 'images/faves/heart.png' %}" : "{% static 'images/faves/red_heart.png' %}";
+              this.setAttribute('data-favorited', String(!favorited));
+              this.alt = favorited ? "Favorite" : "Unfavorite";
+            }
+          });
+        });
+      });
+    });
+  </script>
+    
+    
+{% endblock %}

@@ -1,0 +1,24 @@
+<!-- templates/stocks/stock_details.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    <h1>{{ details.symbol }}</h2>
+    <div>
+        <p><strong>Open: </strong> ${{ details.open }}</p>
+        <p><strong>High: </strong> ${{ details.high }}</p>
+        <p><strong>Low: </strong> ${{ details.low }}</p>
+        <p><strong>Price: </strong> ${{ details.price }}</p>
+        <p><strong>Volume:</strong> {{ details.volume }}</p>
+        <p><strong>Latest Trading Day:</strong> {{ details.latest_trading_day }}</p>
+        <p><strong>Previous Close: </strong> ${{ details.previous_close }}</p>
+        <p><strong>Change: </strong> ${{ details.change }}</p>
+        <p><strong>Change Percent:</strong> {{ details.change_percent }}</p>
+    </div>
+    <div class="container">
+        {% if request.user.is_authenticated %}
+            <!-- Logout button -->
+            <a href="{% url 'add_trade' %}" class="btn btn-primary">Add to portfolio</a>
+        {% endif %}
+    </div>
+{% endblock %}

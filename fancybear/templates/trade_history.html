@@ -1,0 +1,47 @@
+<!-- templates/trade_history.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Your Trade History</h2>
+    {% if trades %}
+        <div class="table-responsive">
+            <table class="table table-hover mt-3">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Ticker</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Value</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for trade in trades %}
+                        <tr>
+                            <td>{{ trade.stock.ticker }}</td>
+                            <td>{{ trade.quantity }}</td>
+                            <td>${{ trade.stock_value|floatformat:2 }}</td>
+                            <td>{{ trade.date }}</td>
+                            <td>{{ trade.time }}</td>
+                            <td>{{ trade.action }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center">You have not made any trades yet.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p>You have not made any trades yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+<!-- templates/reportBug.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Report a Bug</h2>
+    <p>If you've encountered a bug or issue with our application, please fill out the form below to report it. We appreciate your feedback and will work to resolve any issues as quickly as possible.</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="bug_description">Bug Description:</label>
+            <textarea class="form-control" id="bug_description" name="bug_description" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Report Bug</button>
+    </form>
+{% endblock %}
