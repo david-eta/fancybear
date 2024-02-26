@@ -93,10 +93,6 @@ DATABASES = {
     }
 }
 
-DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-}
-
 POSTGRES_DB = os.environ.get("POSTGRES_DB") #database name
 POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD") # database user password
 POSTGRES_USER = os.environ.get("POSTGRES_USER") # database username
