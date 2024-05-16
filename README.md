@@ -4,7 +4,13 @@ This first paragraph should be a short description of the app. You can add links
 to your wiki pages that have more detailed descriptions.
 
 
-StockApp is a webapp, running on any browser, hosted on Microsoft Azure, which will show the user current stocks available to trade. 
+Introducing StockApp: a versatile web application accessible through any browser and seamlessly hosted on Heroku. StockApp empowers users by providing real-time insights into available stocks for trading. 
+
+With StockApp, users can effortlessly manage their investments by adding purchased stocks to our platform and tracking them with ease. The intuitive interface allows users to search for their desired stocks, seamlessly adding or removing them from their portfolio. 
+
+The portfolio page provides a comprehensive overview of all purchased stocks, empowering users with valuable insights into their investment portfolio. Additionally, users can conveniently organize their favorite stocks in the Favorites tab and review past transactions in the Trade History tab. 
+
+Experience the simplicity and efficiency of StockApp for all your stock trading needs.
 
 Your audience for the Readme.md are other developers who are joining your team.
 Specifically, the file should contain detailed instructions that any developer
@@ -38,7 +44,10 @@ The application is deployed on Microsoft Azure
 
 # Testing
 
-(TO BE COMPLETED LATER)
+Before running the tests, make sure you are using a virtual environment to avoid conflicting with your global Python setup. Create the virtual environment outside your project folder to separate dependencies. 
+Once the virtual environment is activated, change the directory to the project folder (fancybear).
+Install all required dependencies by running the following command: pip install -r requirements.txt
+Execute the unit tests by running the following command from the main directory of your project: python manage.py test tests
 
 ## Testing Technology
 

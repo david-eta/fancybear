@@ -1,8 +1,8 @@
-<!-- templates/trade_history.html -->
 {% extends 'base.html' %}
 {% load static %}
 
 {% block head %}
+{% block title %}Trade History | FancyBear{% endblock %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 {% endblock %}
 
@@ -24,8 +24,11 @@
         <tbody>
           {% for trade in history %}
             <tr class="port-stock">
-              <td>{{ trade.stock }}</td>
+              <td><a style="color:inherit;text-decoration:none;" href="{% url 'stock_details' trade.stock %}">
+                {{ trade.stock }}
+              </a></td>
               <td>{{ trade.quantity }}</td>
+              <td>{{ trade.value }}</td>
               <td>{{ trade.action }}</td>
               <td>{{ trade.date }}</td>
             </tr>

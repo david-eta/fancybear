@@ -1,0 +1,216 @@
+/*
+  CSS Styles for Website Styling and Form Handling:
+
+  1. Body:
+    - Sets the background color to a white shade with 70% opacity.
+    - Applies the 'Fira Sans' font family to the entire document.
+
+  2. Global Reset:
+    - Ensures consistent box-sizing behavior for all elements.
+    - Resets margin for all elements to zero.
+    - Defines default styles for certain elements like img, input, p, etc., for better consistency across browsers.
+
+  3. Real Code Starts Here:
+    - Sets the font family to "DM Sans" for HTML elements.
+    - Styles for header:
+      - Part 1: Styles for the top part of the header containing logo and some content.
+      - Part 2: Styles for the bottom part of the header containing navigation.
+    - Defines styles for navigation links and their hover state.
+    - Styles for authentication elements like login/logout buttons.
+    - Defines styles for forms and form elements like input and button.
+    - Responsive design using media queries to adjust layout for screens narrower than 900px.
+  
+  4. Avatar Content:
+    - Styles for a dropdown menu that appears on clicking the avatar.
+
+  5. Error Styling:
+    - Styles for displaying inline errors.
+
+  6. Table Details:
+    - Styles for table cells within a specific table class.
+
+  7. Image Container:
+    - Styles for a container that centers images and adds a border around them.
+*/
+
+body {
+  /* color: rgb(233, 245, 249); */
+  background-color: #e0f5fd; /* White color with 70% opacity */
+  font-family: 'Fira Sans';
+  
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+* {margin: 0;}
+
+/* body {
+  line-height: calc(1em + 0.5rem);
+  -webkit-font-smoothing: antialiased;
+} */
+
+img, picture, video, canvas, svg { /* adjust media defaults */
+  display: block;
+  max-width: 100%;
+}
+input, button, textarea, select {/* Remove built-in form typography styles */
+  font: inherit;
+}
+p, h1, h2, h3, h4, h5, h6 { /* Avoid text overflows */
+  overflow-wrap: break-word;
+}
+html:focus-within { /* scroll behaviour */
+  scroll-behavior: smooth;
+}
+/* End of CSS Reset */
+
+/* Real code Starts Here */
+
+html {
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+}
+
+header .part1 {
+  padding: 20px 0 20px 0;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 4px solid black;
+}
+
+header .part1 .logo { 
+  margin-left: 40px;
+}
+
+header .part2 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: #D6F3FF;
+}
+
+header .part2 .wrapper {
+  width: 80%;
+} 
+input {
+  max-width: 250px;
+}
+header .part2 .wrapper nav {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 10px 0 10px 0;
+}
+
+header .part2 nav a { 
+  text-decoration: none;
+  color: black;
+  font-size: 14px;
+  transition: color 0.3s;
+  /* font-weight: bold; */
+}
+
+nav a:hover {
+  color: #0000a7;/*#d6f3ff;*/
+}
+
+.other {
+  display: flex;
+  font-size: 14px;
+  align-items: center;
+  margin-right: 40px;
+}
+
+.auth {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 15px;
+  /* outline: 3px solid blue; */
+
+}
+
+.other .auth svg {
+  margin: 0 13px 0 7px;
+}
+
+.other .auth img {
+  width: 40px;
+  margin-left: 13px;
+  height: 20px;
+  width: 20px;
+}
+
+header form {
+  display: flex;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+header form input {
+  color: black;
+  border: 1px solid black;
+  border-width: 0 0 1px 0;
+}
+
+header form button[type="submit"] {
+  background: black;
+  border: 0;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 900px) {
+header .part2 .wrapper {
+  width: 100%;
+}
+
+}
+
+.avatar-content {
+  display: none;
+  position: relative;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  /* padding: 12px 16px; */
+  z-index: 1;
+}
+
+.avatar-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.avatar-content a:hover {background-color: #f1f1f1}
+
+
+.error {
+  display: inline; /* Ensures the background is only as wide as the text */
+}
+
+table.dets td {
+  padding-right: 50px !important;
+  padding-bottom: 10px;
+}
+.image-container {
+  text-align:center;
+}
+.image-container img {
+  width: 75%;
+  height: auto;
+  display: inline-block;
+  margin: 5px;
+  border: 3px solid #000080
+}
+
+

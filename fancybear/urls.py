@@ -29,7 +29,7 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
     path('register/', register_view, name='register'),
-    path('add_trade/', add_trade_view, name='add_trade'),
+    path('add_trade/<str:ticker>/', add_trade_view, name='add_trade'),
     path('trade_history/', history_view, name='trade_history'),
     path('portfolio/', portfolio_view, name='portfolio'),
     path('about_us/', aboutUs_view, name='about'),
@@ -40,6 +40,9 @@ urlpatterns = [
     path('favorites/', favorites_view, name='favorites'),
     path('toggle_favorite/', toggle_favorite, name='toggle_favorite'),
     path('remove_favorite/', remove_favorite, name='remove_favorite'),
+    path('update_stock_info/', update_stock_info, name='update_stock_info'),
     path('remove_portfolio/', remove_portfolio, name='remove_portfolio'),
+    path('deposit_withdraw/', deposit_withdraw_view, name='deposit_withdraw'),
+    path('api/prices/', get_chart_prices, name='get_chart_prices'),
     
 ]

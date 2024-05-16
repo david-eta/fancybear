@@ -1,26 +1,43 @@
-<!-- templates/add_trade.html -->
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-    <h2>Add a Trade to Your Portfolio</h2>
+    <head>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/errors.css' %}">
+    </head>
+
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="left-content">
+            <h2>Add a Trade to Your Portfolio</h2>
+        </div>
+        <div class="right-text">
+            <h2 style="margin-left: auto;"><strong>Buying Power:<strong> $ {{ buying_power }}</h2>
+        </div>
+    </div>
+    
     <form method="POST">
         {% csrf_token %}
-        {{ form.non_field_errors }}
-        {{ form.ticker.label_tag }} {{ form.ticker }}
+        ticker
+        <h4>{{ ticker }}</h4>
         <br>
-        {{ form.quantity.label_tag }} {{ form.quantity }}
+        {% for field in form %}
+            {% if field.name != 'ticker' %}
+                <div class='{% if field.field.required %}required-class{% endif %}  {% if field.errors %}has-error{% endif %}'>
+                    {{ field.label_tag }} {{ field }}
+                    <span style="display:inline-block;">{{ field.errors }} </span>
+                </div>
+            {% endif %}
+        {% endfor %}
         <br>
-        {{ form.action.label_tag }}
-        <div class="radio-group">
-            {% for choice in form.action.field.choices %}
-                <label>
-                    <input type="radio" name="action" value="{{ choice.0 }}" {% if choice.0 == form.action.value %} checked {% endif %}>
-                    {{ choice.1 }}
-                </label>
-                <br>
-            {% endfor %}
-        </div>
-        <br>
+        
         <button type="submit">Submit</button>
     </form>
+
+    {% if error_message %}
+    <script>
+        // You might have multiple error messages, so we'll join them into a single alert if needed.
+        alert("{{ error_message|join:"\\n" |escapejs }}");
+    </script>
+    {% endif %}
+
 {% endblock %}

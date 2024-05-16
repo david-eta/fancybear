@@ -1,24 +1,156 @@
-<!-- templates/stocks/stock_details.html -->
 {% extends 'base.html' %}
 
 {% block content %}
+  <div class="container">
+    <h1>{{ details.symbol }}</h1>
+    <br>
+    <table class="dets" style="border:none;">
+      <tr>
+        <td><p><strong>Open: </strong> ${{ details.open }}</p></td>
+        <td><p><strong>High: </strong> ${{ details.high }}</p></td>
+      </tr>
+      <tr>
+        <td><p><strong>Low: </strong> ${{ details.low }}</p></td>
+        <td><p><strong>Price: </strong> ${{ details.price }}</p></td>
+      </tr>
+      <tr>
+        <td><p><strong>Volume:</strong> {{ details.volume }}</p></td>
+        <td><p><strong>Latest Trading Day:</strong> {{ details.latest_trading_day }}</p></td>
+      </tr>
+      <tr>
+        <td><p><strong>Previous Close: </strong> ${{ details.previous_close }}</p></td>
+        <td><p><strong>Change: </strong> ${{ details.change }}</p></td>
+      </tr>
+      <tr>
+        <td><p><strong>Change Percent:</strong> {{ details.change_percent }}</p></td>
+      </tr>
+    </table>
+    <br>
+  </div>
+  <div>
+      <!-- Controls for resetting the chart -->
+      <label for="timeInterval">Select Time Interval:</label>
+      <select id="timeInterval">
+        <option value="day">Day</option>
+        <option value="week">Week</option>
+        <option value="month">Month</option>
+      </select>
+      <button id="resetChartButton" onclick="resetChart()">Reset Chart</button>
+      <canvas id="myChart" style="width: 50%"></canvas>
+    </div>
+    <!-- END RESULTS TABLE -->
     
-    <h1>{{ details.symbol }}</h2>
-    <div>
-        <p><strong>Open: </strong> ${{ details.open }}</p>
-        <p><strong>High: </strong> ${{ details.high }}</p>
-        <p><strong>Low: </strong> ${{ details.low }}</p>
-        <p><strong>Price: </strong> ${{ details.price }}</p>
-        <p><strong>Volume:</strong> {{ details.volume }}</p>
-        <p><strong>Latest Trading Day:</strong> {{ details.latest_trading_day }}</p>
-        <p><strong>Previous Close: </strong> ${{ details.previous_close }}</p>
-        <p><strong>Change: </strong> ${{ details.change }}</p>
-        <p><strong>Change Percent:</strong> {{ details.change_percent }}</p>
-    </div>
+  {% if request.user.is_authenticated %}
     <div class="container">
-        {% if request.user.is_authenticated %}
-            <!-- Logout button -->
-            <a href="{% url 'add_trade' %}" class="btn btn-primary">Add to portfolio</a>
-        {% endif %}
+      <h3>Stock trade history</h3>
+      {% if history %}
+        <div class="table-responsive">
+          <table class="table table-hover mt-3">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Action</th>
+                <th scope="col">Stocks Traded</th>
+                <th scope="col">Value</th>
+                <th scope="col">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for trade in history %}
+                <tr class="port-stock">
+                  <td>{{ trade.action }}</td>
+                  <td>{{ trade.quantity }}</td>
+                  <td>{{ trade.value }}</td>
+                  <td>{{ trade.date }}</td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="4" class="text-center">You have not made any trades with this stock.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p>You have not made any trades.</p>
+      {% endif %}
     </div>
+    <hr>
+    <div class="container" style="margin-bottom:20px">
+      <!-- Add trade button -->
+      <a href="{% url 'add_trade' details.symbol %}" class="btn btn-primary">Trade</a>
+    </div>
+    <br>
+  {% endif %}
+<!-- Include Moment.js library -->
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<!-- Include Chart.js Moment Adapter -->
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@latest"></script>
+<!-- Include Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+var ticker = "{{ details.symbol }}";
+let pricesData = {};
+
+async function fetchData(ticker, timeInterval) {
+  const response = await fetch(`/api/prices/?ticker=${ticker}&time_interval=${timeInterval}`);
+  const data = await response.json();
+  return data;
+}
+
+async function createOrUpdateChart(timeInterval) {
+  pricesData = await fetchData(ticker, timeInterval);
+  const dates = Object.keys(pricesData);
+  const prices = Object.values(pricesData);
+
+  const ctx = document.getElementById('myChart').getContext('2d');
+
+  // If the chart already exists, update it; otherwise, create a new chart
+  if (window.myChart && window.myChart.data) {
+    console.log(window.myChart.data);
+    window.myChart.data.labels = dates;
+    window.myChart.data.datasets[0].data = prices;
+    window.myChart.update();
+  } else {
+    window.myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: 'Stock Prices',
+          data: prices,
+          borderColor: 'blue',
+          backgroundColor: 'rgba(0, 0, 255, 0.1)', // Optional: fill color
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              unit: 'week' // Default time unit
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Date'
+            }
+          }],
+          yAxes: [{
+            scaleLabel: {
+              display: true,
+              labelString: 'Price'
+            }
+          }]
+        }
+      }
+    });
+  }
+}
+function resetChart() {
+  selectedInterval = document.getElementById('timeInterval').value;
+  createOrUpdateChart(selectedInterval);
+}
+createOrUpdateChart('day');
+    </script>
 {% endblock %}

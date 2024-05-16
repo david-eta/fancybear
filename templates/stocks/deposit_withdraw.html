@@ -1,0 +1,48 @@
+<!--
+Functionality:
+- This HTML template extends the 'base.html' template.
+- It provides a form for users to deposit or withdraw funds.
+- The form includes fields for amount and action (deposit or withdraw).
+- Amount field accepts numerical input.
+- Action field is a dropdown menu allowing users to choose between deposit and withdraw.
+- Both fields are required.
+- Upon submission, the form sends a POST request to the 'deposit_withdraw' URL.
+-->
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <div class="left-content">
+        <h2>Deposit or Withdraw</h2>
+    </div>
+    <div class="right-text">
+        <h2 style="margin-left: auto;"><strong>Buying Power:<strong> $ {{ buying_power }}</h2>
+    </div>
+</div>
+    <form method="POST">
+        {% csrf_token %}
+        <br>
+        {% for field in form %}
+            {% if field.name != 'ticker' %}
+                <div class='{% if field.field.required %}required-class{% endif %}  {% if field.errors %}has-error{% endif %}'>
+                    {{ field.label_tag }} {{ field }}
+                    <span style="display:inline-block;">{{ field.errors }} </span>
+                </div>
+            {% endif %}
+        {% endfor %}
+        <br>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if error_message %}
+    <script>
+        // You might have multiple error messages, so we'll join them into a single alert if needed.
+        alert("{{ error_message|join:"\\n" |escapejs }}");
+    </script>
+    {% endif %}
+
+
+{% endblock %}

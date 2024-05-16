@@ -1,35 +1,27 @@
-<!-- templates/favorites.html -->
 {% extends 'base.html' %}
 {% load static %}
+
+{% block title %}Favorite Stocks | FancyBear{% endblock %}
 
 {% block content %}
 <div class="container">
   <h2>Your Favorites</h2>
   <div class="row">
     {% for favorite in favorites %}
-    <div class="col-md-4">
-      <a style="text-decoration:none; color:inherit">
-        <div class="card mb-4">
-          <img src="" class="card-img-top" alt="{{ favorite.stock }}">
-          <div class="card-body">
+    <div class="col-md-3">
+      <div class="card mb-3">
+        {% comment %} <img src="" class="card-img-top" alt="{{ favorite.stock }}"> {% endcomment %}
+        <div class="card-body">
+          <a href="{% url 'stock_details' favorite.stock %}" style="text-decoration:none; color:inherit;">
             <h5 class="card-title">{{ favorite.stock }}</h5>
-            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-            <img src="{% static 'images/remove.png' %}" class="remove-favorite-btn" data-stock="{{ favorite.stock }}" alt="Remove from Favorites" style="cursor:pointer;">
+          </a>
+          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
           </div>
         </div>
-      </a>
     </div>
     {% empty %}
       <p>You have no favorites yet.</p>
     {% endfor %}
   </div>
 </div>
-
-<script src="{% static 'js/remove_button.js' %}"></script>
-<script>
-
-    document.addEventListener("DOMContentLoaded", function() {
-        setupRemovalButtons(".remove-favorite-btn", "{% url 'remove_favorite' %}", ".col-md-4", "data-stock");
-    });
-</script>
 {% endblock %}

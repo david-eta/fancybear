@@ -1,33 +1,56 @@
-<!-- templates/portfolio.html -->
 {% extends 'base.html' %}
 {% load static %}
 
 {% block head %}
+{% block title %}Stock Portfolio | FancyBear{% endblock %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 {% endblock %}
 
 {% block content %}
 <div class="container mt-5">
-  <h2>Your Portfolio</h2>
+  <div style="display: flex; align-items: center;">
+    <img src="{% static 'images/home/avatar.png' %}" alt="DP" id="avatar" class="avatar-image" style="width: 100px; height: 100px; margin-left: 20px;">
+    <h2 style="align-items:center">Balance: $ </h2><h2 id="balance"> {{ user_balance|floatformat:2 }}</h2>
+  </div>
   {% if portfolios %}
     <div class="table-responsive">
       <table class="table table-hover mt-3">
         <thead class="thead-dark">
           <tr>
-            <th scope="col">Ticker</th>
-            <th scope="col">Quantity</th>
-            <th scope="col">Value</th>
+            <th scope="col" title="The stock ticker">Stock</th>
+            <th scope="col" title="Current price per unit of stock">Current Price</th>
+            <th scope="col" title="Amount of shared owned">Number of Shares</th>
+            <th scope="col" title="Average cost per share">Average Cost</th>
+            <th scope="col" title="Total market value of the owned shares">Market Value</th>
+            <th scope="col" title="The return on investment for the stock">Return</th>
+            <th scope="col" title="The return on investment percentage for the stock">Return %</th>
           </tr>
         </thead>
         <tbody>
           {% for portfolio in portfolios %}
-            <tr class="port-stock">
-              <td>{{ portfolio.stock }}</td>
-              <td>{{ portfolio.quantity }}</td>
-              <td>${{ portfolio.value|floatformat:2 }}</td>
-              <td>
-                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-                <img src="{% static 'images/remove.png' %}" class="remove-portfolio-btn" data-stock="{{ portfolio.stock }}" alt="Remove from Portfolio" style="cursor:pointer;">
+            <tr class="port-stock" data-stock="{{ portfolio.stock }}">
+              <td><a style="color:inherit;text-decoration:none;" href="{% url 'stock_details' portfolio.stock %}">
+                  {{ portfolio.stock }}
+              </a></td>
+              <td id="current_price_{{ portfolio.stock }}">{{ portfolio.current_price }} USD</td>
+              <td>{{ portfolio.quantity|floatformat:2  }}</td>
+              <td id="average_price_{{ portfolio.stock }}">{{ portfolio.average_price }} USD</td>
+              <td id="current_value_{{ portfolio.stock }}">{{ portfolio.current_value|floatformat:2 }} USD</td>
+              <td style="color: {% if portfolio.gains < 0 %}red{% else %}green{% endif %};">
+                <span id="gains_{{ portfolio.stock }}">{{ portfolio.gains|floatformat:2 }}</span> USD 
+                {% if portfolio.gains < 0 %}
+                  &#x25BC; <!-- This is the Unicode character for a down arrow -->
+                {% else %}
+                  &#x25B2; <!-- This is the Unicode character for an up arrow -->
+                {% endif %}
+              </td>
+              <td style="color: {% if portfolio.gains < 0 %}red{% else %}green{% endif %};">
+                (<span id="roi_{{ portfolio.stock }}">{{ portfolio.roi|floatformat:2 }}</span>%)
+                {% if portfolio.gains < 0 %}
+                  &#x25BC; <!-- This is the Unicode character for a down arrow -->
+                {% else %}
+                  &#x25B2; <!-- This is the Unicode character for an up arrow -->
+                {% endif %}
               </td>
             </tr>
           {% empty %}
@@ -35,19 +58,75 @@
               <td colspan="3" class="text-center">You have nothing in your portfolio.</td>
             </tr>
           {% endfor %}
+            <tr>
+              <th colspan='4'>Total</th>
+              <th><span id="total_mv">{{ total_market_value|floatformat:2 }}</span> USD</td>
+              
+                
+              <th style="color: {% if total_gains < 0 %}red{% else %}green{% endif %};">
+                <span id="total_gains">{{ total_gains|floatformat:2 }}</span> USD
+                {% if total_gains < 0 %}
+                  &#x25BC; <!-- This is the Unicode character for a down arrow -->
+                {% else %}
+                  &#x25B2; <!-- This is the Unicode character for an up arrow -->
+                {% endif %}
+              </th>
+              <th></th>
+            </tr>
         </tbody>
       </table>
     </div>
+    <button onclick="refreshStockPrices()">Refresh</button>
   {% else %}
     <p>You have nothing in your portfolio.</p>
   {% endif %}
 </div>
 
-<script src="{% static 'js/remove_button.js' %}"></script>
 <script>
 
   document.addEventListener("DOMContentLoaded", function() {
     setupRemovalButtons(".remove-portfolio-btn", "{% url 'remove_portfolio' %}", ".port-stock", "data-stock");
   });
+
+  async function refreshStockPrices() {
+    console.log({{ user_balance }})
+    var newBalance = {{ user_balance }};
+    var total_mv = 0;
+    var total_gains = 0;
+    const tickers = [...document.querySelectorAll('.port-stock')].map(
+        el => el.dataset.stock);
+    
+    const fetchPromises = tickers.map(ticker => {
+      const url = `{% url 'update_stock_info' %}?ticker=${ticker}`;
+      fetch(url)
+      .then(response => response.json()) 
+      .then(data => {
+        if (data.error) {
+          console.error(data.error);
+        } else {
+          document.querySelector(`#current_price_${ticker}`).textContent = `${data.current_price} USD`;
+          document.querySelector(`#current_value_${ticker}`).textContent = `${parseFloat(data.current_value).toFixed(2)} USD`;
+          document.querySelector(`#gains_${ticker}`).textContent = `${parseFloat(data.gains).toFixed(2)}`;
+          document.querySelector(`#roi_${ticker}`).textContent = `${parseFloat(data.roi).toFixed(2)}`;
+          newBalance = newBalance +`${parseFloat(data.gains).toFixed(2)}`;
+          total_mv += parseFloat(data.current_value);
+          total_gains += parseFloat(data.gains);
+          console.log(` inside ${parseFloat(total_mv).toFixed(2)}`);
+          document.getElementById('balance').textContent = `${parseFloat(newBalance).toFixed(2)}`;
+          document.getElementById('total_mv').textContent = `${parseFloat(total_mv).toFixed(2)}`;
+          console.log(`${parseFloat(total_mv).toFixed(2)}`);
+          document.getElementById('total_gains').textContent = total_gains;
+        }
+        
+      })
+      .catch(error => console.error('Error updating stock prices:', error));
+    });
+
+    await Promise.all(fetchPromises);
+
+    console.log(`last ${parseFloat(total_mv).toFixed(2)}`);
+    
+  }
+    
 </script>
 {% endblock %}

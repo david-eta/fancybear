@@ -1,0 +1,28 @@
+/*
+  CSS Styles for Form Error Handling:
+
+  1. .has-error input:
+    - Changes the border color of input fields inside elements with the class "has-error" to red.
+
+  2. .errorlist:
+    - Styles for displaying error messages in a list format.
+    - Sets text color to a shade of red (#c33) for better visibility of error messages.
+    - Removes default list styling.
+    - Sets background color to a light shade (#fee) for better differentiation from the rest of the content.
+    - Adjusts margin to control spacing around the error list.
+    - Aligns text to the left for better readability.
+*/
+
+.has-error input{
+  border: solid #F33; /* Change the border color to red */
+
+}
+
+.errorlist {
+  color: #c33; /* Error message styling */
+  margin: 0; /* Adjust spacing as needed */
+  list-style-type: none;
+  background-color: #fee;
+  margin-top: 5px;
+  text-align: left;
+}

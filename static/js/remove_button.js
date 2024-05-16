@@ -1,4 +1,19 @@
-// static/js/remove_button.js
+/*
+  JavaScript Function for Setting up Removal Buttons:
+
+  - Function setupRemovalButtons: Sets up removal buttons for elements matching a given class.
+    Parameters:
+      - button_class: CSS class selector for removal buttons.
+      - removal_url: URL to send removal request.
+      - parent_class: CSS class selector for parent element to remove.
+      - data_identifier: Attribute name to identify the data associated with the element.
+
+  - The function attaches a click event listener to each button matching the provided class.
+    When clicked, it prevents event propagation, sends a POST request to the removal URL
+    with necessary data (including CSRF token), and removes the parent element upon successful removal.
+    If there's an issue with removal, it displays an alert message.
+*/
+
 function setupRemovalButtons(button_class, removal_url, parent_class, data_identifier) {
   document.querySelectorAll(button_class).forEach(img => {
     img.addEventListener('click', function(event) {

@@ -1,4 +1,3 @@
-<!-- templates/stocks/search_results.html -->
 {% extends 'base.html' %}
 {% load static %}
 
@@ -11,11 +10,6 @@
         <tbody>
           {% for ticker, name in results %}
             <tr>
-              <a href="{% url 'stock_details' ticker %}">
-                <td style="width: 50px;" class="image" onclick="window.location='{% url 'stock_details' ticker %}';">
-                  <img src="abc.jpg" alt="IMG">
-                </td>
-              </a>
               <a href="{% url 'stock_details' ticker %}">
                 <td class="product" onclick="window.location='{% url 'stock_details' ticker %}';">
                   <strong>{{ name }}</strong><br>{{ ticker }}
@@ -41,7 +35,7 @@
         </tbody>
       </table>
     </div>
-    <!-- END RESULTS TABLE -->
+    
   {% else %}
     <p>No results found.</p>
   {% endif %}

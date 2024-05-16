@@ -1,67 +1,84 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">    
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'home' %}" style="border:  2px solid black;">Home</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex justify-content-between">
-                {% if request.user.is_authenticated %}
-
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'add_trade' %}">Add trade</a> <!--todo add functionality-->
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'portfolio' %}">Portfolio</a> <!--todo add functionality-->
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria=-current="page" href="{% url 'about' %}">About Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria=-current="page" href="{% url 'contact' %}">Contact Us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria=-current="page" href="{% url 'report' %}">Report a bug</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria=-current="page" href="{% url 'favorites' %}">Favorites</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'trade_history' %}"> Trade History</a> 
-                </li>
-                {% endif %}
-                <form class="d-flex" method="get" action="{% url 'search_results' %}">
-                    {{ search_form.query }}
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                <!--
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Else
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown"> 
-                        {% comment %} todo add functionality {% endcomment %}
-                        <li><a class="dropdown-item" href="{% url 'about' %}">About Us</a></li>
-                        <li><a class="dropdown-item" href="{% url 'contact' %}">Contact Us</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'report' %}">Report a bug</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Fira+Code&size=25&duration=2500&pause=100&color=000000&center=true&vCenter=true&random=false&width=435&lines=Fancy+Bear+Stocks;The+Ultimate+Web-App;BUY%2FTRADE+STOCKS;MAKE+MONEY" alt="Typing SVG" /></a>                </li>
-                -->
-{% if request.user.is_authenticated %}
-    <li class="nav-item">
-        <span class="nav-link">Welcome, {{ request.user.username }}!</span>
-    </li>
-{% endif %}
-            
-            </ul>
-            {% comment %} {% if request.user.is_authenticated %}
-            {% include 'search/search-form.html' %}
-            {% endif %} {% endcomment %}
-
-      
-        </div>
+{% load static %}
+<header>
+  <div class="part1">
+    <div class="logo">
+      <a href="{% url 'home' %}">
+        <svg width="160" height="38" viewBox="0 0 160 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14.9799 4.76C15.3639 5.336 15.4599 6.264 15.1399 6.936C14.6599 7.864 13.5079 8.248 12.5799 7.8C11.6199 7.32 11.2359 6.2 11.7159 5.24C11.9399 4.76 12.3559 4.472 12.8359 4.376C13.3159 4.312 12.8359 3.704 11.6519 3.704C10.4039 3.704 9.63588 5.592 9.63588 12.216H13.0599L12.9639 12.76H9.63588V23.384C9.63588 25.144 9.79588 26.136 10.9479 26.456V27H4.38788V26.456C5.60388 26.104 5.63588 25.016 5.63588 23.384V12.76H3.58788L3.55588 12.216H5.63588C5.63588 4.824 7.71588 3.16 11.5879 3.16C13.3479 3.16 14.6599 4.216 14.9799 4.76ZM23.4594 23.704C23.4594 23.64 23.4594 19.384 23.4594 19.384C20.3234 20.088 19.2674 21.592 19.2674 23.224C19.2674 23.224 19.2674 25.336 21.3474 25.336C22.4354 25.336 23.1714 24.472 23.4594 23.704ZM29.0274 25.336C29.0274 25.336 29.6994 25.336 29.8914 24.792L30.4354 25.016C30.1794 26.04 28.7074 27.288 26.6914 27.288C26.6914 27.288 23.8434 27.288 23.4914 24.696C23.0114 26.104 21.1234 27.288 18.8514 27.288C18.8514 27.288 15.1714 27.288 15.1714 24.024C15.1714 20.536 17.8594 20.216 23.4594 18.808V16.824C23.4594 13.496 21.6034 11.832 19.3954 12.984C18.3714 13.496 18.2434 14.04 18.4674 14.072C18.9474 14.136 19.3634 14.36 19.6514 14.776C20.2274 15.608 20.0034 16.728 19.1714 17.304C18.3394 17.848 17.2194 17.656 16.6434 16.824C16.2594 16.216 16.2274 15.448 16.5474 14.904C16.8674 14.36 17.2834 13.496 19.0434 12.568C20.4834 11.8 22.1474 11.928 22.1474 11.928C26.3394 11.928 27.4914 14.552 27.4914 18.328V23.096C27.4914 23.096 27.4594 25.336 29.0274 25.336ZM45.9664 23.096C45.9664 24.856 46.1264 26.168 47.2784 26.456V27H40.6864V26.456C41.9024 26.104 41.9664 24.728 41.9664 23.096V16.888C41.9664 15.352 40.9744 14.232 39.3744 14.232C38.1264 14.232 36.6544 15.576 36.6544 16.856V23.16C36.6544 24.92 36.8464 26.136 37.9664 26.456V27H31.4064V26.456C32.6224 26.104 32.6544 24.792 32.6544 23.16V15.928C32.6544 14.808 32.3664 14.456 31.0544 13.752V13.208L36.6544 11.928V15.352C37.3904 13.4 39.9184 11.928 41.9344 11.928C44.4304 11.928 45.9664 12.92 45.9664 16.792V23.096ZM62.3844 22.872L62.8324 23.16C62.3844 24.792 60.4644 27.288 56.4644 27.288C52.2724 27.288 49.4244 23.288 49.4244 19.544C49.4244 15.864 52.2404 11.928 57.7124 11.928C59.9844 11.928 61.3604 12.856 61.9044 13.336C62.4484 13.816 62.7684 14.712 62.5444 15.48C62.2244 16.6 61.0724 17.336 59.9204 17.016C58.7684 16.728 58.0964 15.544 58.4164 14.424C58.5444 13.816 58.9284 13.4 59.4084 13.144C59.6964 13.016 58.9924 12.472 57.7124 12.472C56.5604 12.472 53.4564 13.464 53.4564 18.968C53.4564 22.424 55.3124 23.96 57.5204 24.44C59.1204 24.792 61.6484 23.928 62.3844 22.872ZM73.5756 12.216H79.8476V12.76C79.1756 12.76 77.7036 12.824 75.6556 17.752L70.7596 30.648C69.9276 32.824 68.9676 33.72 68.3596 34.2C67.7836 34.68 66.6636 34.872 65.8956 34.52C64.7756 34.008 64.2956 32.696 64.7756 31.576C65.2876 30.456 66.5996 29.944 67.7196 30.456C68.2956 30.712 68.6476 31.224 68.8076 31.768C68.9356 32.152 69.7036 31.928 70.2156 30.584L71.4316 27.288C69.4476 22.712 65.3836 14.008 65.3836 14.008C64.8716 12.76 63.8476 12.76 63.3676 12.76V12.216H70.9196V12.76C69.2556 12.76 70.0876 14.712 70.0876 14.712L73.4796 21.944L75.1756 17.624C75.1756 17.624 77.2876 12.728 73.5756 12.76V12.216ZM90.1841 26.744C92.5201 26.744 93.5121 24.952 93.5121 20.056C93.5121 14.936 92.3281 13.272 89.7041 13.272C87.5281 13.272 86.3761 15.064 86.3761 17.336V21.4C86.3761 25.432 88.3601 26.744 90.1841 26.744ZM91.3041 11.928C94.8881 11.928 98.0881 14.744 98.0881 19.8C98.0881 24.952 94.6961 27.288 90.2161 27.288C88.2961 27.288 86.6001 26.712 85.5441 25.656C84.3921 26.648 82.4081 27.352 82.4081 26.84V6.904C82.4081 5.816 82.0881 5.336 80.7761 4.856V4.312L86.3761 3.128V14.648C87.4001 12.728 89.7681 11.928 91.3041 11.928ZM104.577 18.776H110.849C110.849 14.744 109.537 12.472 107.777 12.472C105.889 12.472 104.577 15.704 104.577 18.776ZM107.937 11.928C112.577 11.928 114.753 14.328 114.753 19.32H104.577C104.833 22.456 106.433 24.088 108.577 24.568C110.305 24.952 112.865 24.312 113.665 22.808L114.209 23.096C113.697 24.76 111.809 27.288 107.521 27.288C103.329 27.288 100.449 23.416 100.449 19.672C100.449 15.16 103.521 11.928 107.937 11.928ZM125.678 23.704C125.678 23.64 125.678 19.384 125.678 19.384C122.542 20.088 121.486 21.592 121.486 23.224C121.486 23.224 121.486 25.336 123.566 25.336C124.654 25.336 125.39 24.472 125.678 23.704ZM131.246 25.336C131.246 25.336 131.918 25.336 132.11 24.792L132.654 25.016C132.398 26.04 130.926 27.288 128.91 27.288C128.91 27.288 126.062 27.288 125.71 24.696C125.23 26.104 123.342 27.288 121.07 27.288C121.07 27.288 117.39 27.288 117.39 24.024C117.39 20.536 120.078 20.216 125.678 18.808V16.824C125.678 13.496 123.822 11.832 121.614 12.984C120.59 13.496 120.462 14.04 120.686 14.072C121.166 14.136 121.582 14.36 121.87 14.776C122.446 15.608 122.222 16.728 121.39 17.304C120.558 17.848 119.438 17.656 118.862 16.824C118.478 16.216 118.446 15.448 118.766 14.904C119.086 14.36 119.502 13.496 121.262 12.568C122.702 11.8 124.366 11.928 124.366 11.928C128.558 11.928 129.71 14.552 129.71 18.328V23.096C129.71 23.096 129.678 25.336 131.246 25.336ZM142.809 12.088C143.481 11.8 144.697 11.928 145.401 12.504C146.393 13.368 146.489 14.904 145.625 15.864C144.761 16.856 143.289 16.984 142.265 16.12C141.785 15.672 141.529 15.128 141.529 14.552C141.529 14.2 140.217 14.52 139.033 16.44V23.096C139.033 24.888 139.193 26.136 140.345 26.456V27H133.721V26.456C134.969 26.072 135.001 24.76 135.001 23.096V15.992C135.001 14.904 134.713 14.424 133.401 13.752V13.208L139.033 11.928V15.544C140.729 12.888 142.041 12.408 142.809 12.088ZM152.783 24.472C152.783 25.976 151.567 27.16 150.095 27.16C148.591 27.16 147.375 25.976 147.375 24.472C147.375 22.968 148.591 21.752 150.095 21.752C151.567 21.752 152.783 22.968 152.783 24.472Z" fill="black"/>
+          <rect x="79" y="31" width="81" height="3" fill="black"/>
+          <rect y="31" width="60" height="3" fill="black"/>
+        </svg>
+      </a>
     </div>
-</nav>
+  
+    <div class="other">
+      <div class="auth">
+      {% if request.user.is_authenticated %}
+        <span id="username" class="username">{{ request.user.username }}</span> 
+        <img src="{% static 'images/home/avatar.png' %}" alt="DP" id="avatar"><!-- Avatar -->
+        <div class="avatar-content" id="avatarContent">
+          <a href="{% url 'logout' %}">Logout</a>
+        </div>
+      {% else %}
+        <span>{{ request.user.username }}</span> <!-- what is this for -->
+        <a href="{% url 'login' %}">Login</a>
+        <img src="{% static 'images/home/avatar.png' %}" alt="DP" id="avatar"><!-- Avatar -->
+        <div class="avatar-content" id="avatarContent">
+          <a href="{% url 'login' %}">Login</a>
+          <a href="{% url 'register' %}">Register</a>
+        </div>
+      {% endif %}
+      </div>
+      <form method="get" action="{% url 'search_results' %}">
+        <input type="text" name="query" placeholder="Search for Stocks">
+        <button type="submit">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 15L10.9581 10.9581M10.9581 10.9581C12.052 9.86411 12.6666 8.38039 12.6666 6.8333C12.6666 5.28621 12.052 3.80249 10.9581 2.70853C9.86411 1.61458 8.38039 1 6.8333 1C5.28621 1 3.80249 1.61458 2.70853 2.70853C1.61458 3.80249 1 5.28621 1 6.8333C1 8.38039 1.61458 9.86411 2.70853 10.9581C3.80249 12.052 5.28621 12.6666 6.8333 12.6666C8.38039 12.6666 9.86411 12.052 10.9581 10.9581Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </form>
+
+    </div>
+  </div>
+  <div class="part2">
+    <div class="wrapper">
+      <nav>
+        {% if request.user.is_authenticated %}
+        <a aria-current="page" href="{% url 'portfolio' %}">PORTFOLIO</a>
+        <a aria=-current="page" href="{% url 'favorites' %}">FAVORITES</a>
+        <a aria-current="page" href="{% url 'trade_history' %}">TRADE HISTORY</a> 
+        <a aria-current="page" href="{% url 'deposit_withdraw' %}">DEPOSIT/WITHDRAW</a>
+        <a aria=-current="page" href="{% url 'about' %}">ABOUT US</a>
+        <a aria=-current="page" href="{% url 'contact' %}">CONTACT US</a>
+        <a aria=-current="page" href="{% url 'report' %}">REPORT A BUG</a>
+      
+        {% else %} <!-- Redirects to login page -->
+        <a aria-current="page" href="{% url 'login' %}">PORTFOLIO</a>
+        <a aria-current="page" href="{% url 'login' %}">FAVORITES</a>
+        <a aria-current="page" href="{% url 'login' %}">TRADE HISTORY</a> 
+        <a aria-current="page" href="{% url 'login' %}">DEPOSIT/WITHDRAW</a>
+        <a aria=-current="page" href="{% url 'about' %}">ABOUT US</a>
+        <a aria=-current="page" href="{% url 'contact' %}">CONTACT US</a>
+        <a aria=-current="page" href="{% url 'report' %}">REPORT A BUG</a>
+        {% endif %}
+        </nav> 
+    </div>  
+  </div>
+</header>
+
+<script>
+  document.getElementById("avatar").onclick = function() {
+    var dropdownContent = document.getElementById("avatarContent");
+    if (dropdownContent.style.display === "block") {
+      dropdownContent.style.display = "none";
+    } else {
+      dropdownContent.style.display = "block";
+    }
+  }
+  </script>
+<style>
+  /* CSS to override cursor behavior */
+  .username {
+    cursor: default; /* Set the cursor to default */
+  }
+</style>

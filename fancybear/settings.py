@@ -25,11 +25,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-r5(a&f@v*7)+bw0_ut=!#pmlj4w*hsh$2j*lx+q24^_1@0i=c-')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = str(os.environ.get('DEBUG')) == "1" # 1 == True
-ENV_ALLOWED_HOST = os.environ.get('DJANGO_ALLOWED_HOST') or None
-ALLOWED_HOSTS = []
-if not DEBUG:
-    ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
+DEBUG = True#str(os.environ.get('DEBUG')) == "1" # 1 == True
+
 ALLOWED_HOSTS = ['fancy-bear-64fe20927fa1.herokuapp.com', 'localhost', '127.0.0.1']
 
 # Application definition
@@ -47,6 +44,7 @@ INSTALLED_APPS = [
     'trades',
     'accounts',
     'fancybear',
+    'tests'
 ]
 
 MIDDLEWARE = [
@@ -159,6 +157,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -167,10 +166,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # e.g., 'smtp.gmail.com' for Gmail
+EMAIL_HOST = 'smtp.mail.yahoo.com' # Yahoo SMTP server
 EMAIL_PORT =  587  # 587 or  465  for SSL
 EMAIL_USE_TLS = True  # or EMAIL_USE_SSL = True for SSL
-EMAIL_HOST_USER = 'markshperkin1@gmail.com'  # your email address
-EMAIL_HOST_PASSWORD = 'vbnenkmbbkmknspf'  # your email password
+EMAIL_HOST_USER = 'fancybear1@yahoo.com'  # your email address
+EMAIL_HOST_PASSWORD = 'pocrjxrylyahhphp'  # your email password
 # the email password is C@pStone
-

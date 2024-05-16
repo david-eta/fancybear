@@ -1,54 +1,59 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
-    <head>
-         <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+     <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Bootstrap CSS -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-
-
-    </head>
-    <body>
-        {% include 'base/navbar.html' %}
-        
-        <div class='container'>
-            
-            {% block content %}
-            <div class="jumbotron text-center">
-                <h1 class="display-4">Welcome to Fancy Bear Stocks Web App!</h1>
-                <p class="lead">This is where you can manage your stock portfolios and track your investments.</p>
-                <img src="{% static 'images/home/welcome_image.jpg' %}" alt="Welcome Image" class="img-fluid">
-            </div>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Fira Sans' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/errors.css' %}">
+    <title>{% block title %}FancyBear Stock App{% endblock %}</title>
+  </head>
+  <body>
+    {% include 'base/navbar.html' %}
+    
+    <div class='container'>
+      
+      {% block content %}
+      <div class="jumbotron text-center image-container">
+        <h1 class="display-4">Welcome to Fancy Bear Stocks Web App!</h1>
+        <p class="lead">This is where you can manage your stock portfolios and track your investments.</p>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/SkvvTUc-WMQ?si=EyWTl6SWeHF-OIZJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        <p>The Fancybear Web Application is a platform to track your trades. It is intended to be a user-friendly. You can search stocks in the navigation bar and add them to your portfolio. Users can also "favorite" stocks to keep track of them easily. </p>
+        <img src="static/images/home/Splash12.png">
+        <p>Image 1: Page to add trades </p>
+        <hr>
+        <br>
+        <img src="static/images/home/Splash11.png">
+        <p>Image 2: Page to show portfolio </p>
+        <hr>
+        <br>
+        <img src="static/images/home/Splash13.png">
+        <p>Image 3: Page to show stock searches </p>
+        <hr>
+        <br>
+        <img src="static/images/home/Splash14.png">
+        <p>Image 4: Page showing stock information </p>
+        <hr>
+        <br>
         </div>
+    </div>
+    {% endblock content %}
 
-        <!-- Login/Register buttons -->
-        <div class="container">
-            {% if request.user.is_authenticated %}
-                <!-- Logout button -->
-                <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
-            {% else %}
-                <!-- Login button -->
-                <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
-                <!-- Register button -->
-                <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
-            {% endif %}
-        </div>
+    <!-- ... rest of your base.html content ... -->
 
-        {% endblock content %}
+    
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 
-        <!-- ... rest of your base.html content ... -->
-
-        
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-
-        <script>
-            document.body.addEventListener("htmx:configRequest", (event)=>{
-                event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}'
-            })
-        </script>
-    </body>
+    <script>
+      document.body.addEventListener("htmx:configRequest", (event)=>{
+        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}'
+      })
+    </script>
+  </body>
 </html>
