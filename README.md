@@ -13,11 +13,15 @@ Without further ado, the FancyBear Stock App. FancyBear is a web-based platform 
 ## Overview
 
 ### Pages
-- **:** blah
-- **:** blah
-- **:** blah
-- **:** blah
-- **:** blah
+- **Homepage:** We have a splash page that describes the platform and how to use it.
+- Each page has a search bar where they can search for a stock based on the entity name or stock ticker.
+- **Login and Register pages:** The user can create an account or log in. Username and password validation are built in properties with django.
+- **Logout page**
+- **Deposit/Withdraw page:** The user can add money to their balance. This is not real money but it simulates the idea of adding buying power or withdrawing money.
+- **Add Trade page:** This is where the user can buy a stock or sell some or all of a stock they own.
+- **Trade History page:** The user can see all the trades they have made with the platform.
+- **Stock Details page:** Every stock that is searched or clicked on can have details on their price and more pulled from an API and presented comprehensively. This includes a graph of previous stock price data.
+- **Portfolio page:**
 
 
 ### Backend Technologies
@@ -27,46 +31,27 @@ This app was created using [Django](https://www.djangoproject.com/), a [Python](
 The frontend was mainly HTML and CSS with some Django commands. To make the interactions smoother and more seamless, we used some JavaScript (JS). This was either in the HTML or in local, static, JS files.
 With StockApp, users can effortlessly manage their investments by adding purchased stocks to our platform and tracking them with ease. The intuitive interface allows users to search for their desired stocks, seamlessly adding or removing them from their portfolio. 
 
-The portfolio page provides a comprehensive overview of all purchased stocks, empowering users with valuable insights into their investment portfolio. Additionally, users can conveniently organize their favorite stocks in the Favorites tab and review past transactions in the Trade History tab. 
-
+## Features
+blah
 
 ## Installation
 
 In order to build this project you first have to install:
 
 - You need to install Python through this [link](https://www.python.org/downloads/).
-- Once you do so and add Python to PATH, install django through ```pip install django```
+- Once you do so and add Python to PATH, go to the path of this project in your terminal and type ```pip install -r requirements.txt```.
+This should install all the python libraries you need including Django.
 
-If possible, list the actual commands you used to install these, so the reader
-can just cut-n-paste the commands and get everything setup.
-
-## Setup
+### Setup
 
 Using whatever IDE you prefer, clone the repo to your local machine to work with it.
 
-## Running
+### Running
 
-While in the fancy-bear directory
-python3 manage.py runserver
+While in the fancy-bear directory in the terminal, type ```python manage.py runserver```.
+If this does not work, replace python with python3, py, or py3. It is possible that Python may have been saved differently on your device.
 
-# Deployment
 
-The application is deployed on Microsoft Azure
-
-# Testing
-
-Before running the tests, make sure you are using a virtual environment to avoid conflicting with your global Python setup. Create the virtual environment outside your project folder to separate dependencies. 
-Once the virtual environment is activated, change the directory to the project folder (fancybear).
-Install all required dependencies by running the following command: pip install -r requirements.txt
-Execute the unit tests by running the following command from the main directory of your project: python manage.py test tests
-
-## Testing Technology
-
-Built in testing library from Python.
-
-## Running Tests
-
-Explain how to run the automated tests.
 
 ## Authors
 - [Christian Lee](https://github.com/christian1049)
