@@ -15,13 +15,14 @@ Without further ado, the FancyBear Stock App. FancyBear is a web-based platform 
 ### Pages
 - **Homepage:** We have a splash page that describes the platform and how to use it.
 - Each page has a search bar where they can search for a stock based on the entity name or stock ticker.
+- **Favourite Page:** When a user searches stocks, they can like them. The favourites page shows them all the stocks they have liked.
 - **Login and Register pages:** The user can create an account or log in. Username and password validation are built in properties with django.
 - **Logout page**
 - **Deposit/Withdraw page:** The user can add money to their balance. This is not real money but it simulates the idea of adding buying power or withdrawing money.
 - **Add Trade page:** This is where the user can buy a stock or sell some or all of a stock they own.
 - **Trade History page:** The user can see all the trades they have made with the platform.
 - **Stock Details page:** Every stock that is searched or clicked on can have details on their price and more pulled from an API and presented comprehensively. This includes a graph of previous stock price data.
-- **Portfolio page:**
+- **Portfolio page:** This page reflects the stocks the user owns, the quantity, and their ROI.
 
 
 ### Backend Technologies
@@ -32,7 +33,12 @@ The frontend was mainly HTML and CSS with some Django commands. To make the inte
 With StockApp, users can effortlessly manage their investments by adding purchased stocks to our platform and tracking them with ease. The intuitive interface allows users to search for their desired stocks, seamlessly adding or removing them from their portfolio. 
 
 ## Features
-blah
+- Browsing: Users can effortlessly search for stocks and find out more information about them and how they have been performing.
+- User Accounts: You can create an account or log into an account already created.
+- Responsive Design: Whether accessed from a desktop, tablet, or mobile device, our candy store app adapts seamlessly to provide an optimal viewing experience.
+- Trading: Users can buy or sell stocks based on how much buying power they have and how much of a stock they own respectively.
+- View Portfolios: Users can see how each of the stocks they own are performing.
+- Like Stocks: Users can favourite stocks and view all the stocks they've 'favourited'.
 
 ## Installation
 
